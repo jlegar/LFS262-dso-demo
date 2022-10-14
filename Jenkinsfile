@@ -47,5 +47,12 @@ pipeline {
         sh "echo done"
       }
     }
+    stage('Docker Build & Publish') {
+      steps {
+        container('kaniko') {
+          sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd`--insecure --skip-tls-verify --cache=true--destination=docker.io/jlegardevops/dsodemo'
+        }
+      }
+    }
   }
 }
